@@ -12,15 +12,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-
+#TODO: Find a way to test dash
 
 from beep.protocol.maccor import Procedure
 import beep.protocol.vizualize_maccor
 
-#Load the procedure for the first test (will change to relative paths, etc. as I move forward)
-proc = Procedure.from_file("/Users/alecbills/ResearchProjects/IndustryProjects/Ampaire/maccor/protocols/ampaire_bic_v2_0.000")
+import unittest 
+import os
 
+TEST_DIR = os.path.dirname(__file__)
+TEST_FILE_DIR = os.path.join(TEST_DIR, "test_files")
 
-thing = proc.convert_to_graph_dict()
-proc.vizualize()
+class ProtocolVizualization(unittest.TestCase):
+    def setUp(self):
+        pass
+    
+    def test_ampaireProtocol(self):
+        proc = Procedure.from_file("/Users/alecbills/ResearchProjects/IndustryProjects/Ampaire/maccor/protocols/ampaire_bic_v2_0.000")
+        proc.convert_to_graph_dict()
+    
+    def test_diagnosticV4(self):
+        proc = Procedure.from_file(TEST_FILE_DIR+"/diagnosticV4.000")
+        proc.convert_to_graph_dict()
+    
+    def test_EXP_missing(self):
+        proc = Procedure.from_file(TEST_FILE_DIR+"/EXP.000")
+        proc.convert_to_graph_dict()
+
+    def test_xTESLA_1(self):
+        proc = Procedure.from_file(TEST_FILE_DIR+"/xTESLADIAG_000003_CH68.000")
+        proc.convert_to_graph_dict()
+            
+    def test_xTESLA_2(self):
+        proc = Procedure.from_file(TEST_FILE_DIR+"/xTESLADIAG_000004_CH69.000")
+        proc.convert_to_graph_dict()
+        
+if __name__ == "__main__":
+    unittest.main()

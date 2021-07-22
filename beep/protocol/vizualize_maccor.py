@@ -177,6 +177,8 @@ def convert_to_graph_dict(self):
         elif stepType=='End':
             thisStep.update({'step-name':'end'})
             thisStep.update({'ends':[]})
+        else:
+            raise Exception("Step not found")
         graphDict.append(thisStep)
     return graphDict
 
